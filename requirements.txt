@@ -1,0 +1,6 @@
+quixstreams
+websockets
+onnxruntime
+clickhouse-connect
+numpy
+transformers

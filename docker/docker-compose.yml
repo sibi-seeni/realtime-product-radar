@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:latest
+    container_name: redpanda
+    ports:
+      - "9092:9092"
+      - "9644:9644"
+    environment:
+      - REDPANDA_KAFKA_ADVERTISED_LISTENERS=plain://localhost:9092, http://localhost:9644
+      - REDPANDA_KAFKA_LISTENERS=plain://0.0.0.0:9092, http://0.0.0.0:9644
+    command:
+      - redpanda start
+      - --overprovisioned-cpu-core-count 1
+      - --panda-flavor minimal
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - ./clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql
