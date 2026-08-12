@@ -4,3 +4,5 @@ onnxruntime
 clickhouse-connect
 numpy
 transformers
+torch
+optimum[onnxruntime]
